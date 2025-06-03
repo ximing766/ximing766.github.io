@@ -3,19 +3,35 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ximing766的技术文档中心，汇集UWB技术文档、项目指南和开发工具">
+    <meta name="keywords" content="UWB,技术文档,开发指南,项目模板,ximing766">
+    <meta name="author" content="ximing766">
     <title>ximing766 - 技术文档中心</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --accent-color: #3b82f6;
+            --primary-color: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
             --text-color: #1f2937;
             --text-light: #6b7280;
+            --text-muted: #9ca3af;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --border-color: #e5e7eb;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -24,74 +40,255 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gradient-primary);
             min-height: 100vh;
             color: var(--text-color);
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 背景动画 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            animation: backgroundMove 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-20px) translateY(-10px); }
+            50% { transform: translateX(20px) translateY(10px); }
+            75% { transform: translateX(-10px) translateY(20px); }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
+            position: relative;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: var(--transition);
+            transform: translateY(-100%);
+            animation: slideDown 0.6s ease-out 0.5s forwards;
+        }
+
+        @keyframes slideDown {
+            to { transform: translateY(0); }
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin: 8rem 0 4rem;
             color: white;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .header h1 {
-            font-size: 3rem;
+            font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .stat-item:nth-child(1) { animation-delay: 0.4s; }
+        .stat-item:nth-child(2) { animation-delay: 0.6s; }
+        .stat-item:nth-child(3) { animation-delay: 0.8s; }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
         }
 
         .docs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         .doc-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 2rem;
+            background: var(--gradient-card);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
             box-shadow: var(--shadow-lg);
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .doc-card:nth-child(1) { animation-delay: 0.2s; }
+        .doc-card:nth-child(2) { animation-delay: 0.4s; }
+        .doc-card:nth-child(3) { animation-delay: 0.6s; }
+        .doc-card:nth-child(4) { animation-delay: 0.8s; }
+
+        .doc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .doc-card:hover::before {
+            transform: scaleX(1);
         }
 
         .doc-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-xl);
         }
 
         .doc-card h3 {
-            color: var(--primary-color);
+            color: var(--text-color);
             font-size: 1.5rem;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            font-weight: 600;
+        }
+
+        .doc-card .icon {
+            width: 28px;
+            height: 28px;
+            fill: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .doc-card:hover .icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .doc-card p {
             color: var(--text-light);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-size: 0.95rem;
         }
 
         .doc-link {
@@ -101,47 +298,182 @@
             background: var(--primary-color);
             color: white;
             text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--border-radius-sm);
             font-weight: 500;
-            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .doc-link:hover::before {
+            left: 100%;
         }
 
         .doc-link:hover {
-            background: var(--secondary-color);
-            transform: translateX(2px);
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
         }
 
         .icon {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             fill: currentColor;
+        }
+
+        /* 特色区域 */
+        .features-section {
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .features-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 1s forwards;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .feature-item:nth-child(1) { animation-delay: 1.2s; }
+        .feature-item:nth-child(2) { animation-delay: 1.4s; }
+        .feature-item:nth-child(3) { animation-delay: 1.6s; }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            fill: var(--accent-color);
+        }
+
+        .feature-item h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item p {
+            opacity: 0.9;
+            line-height: 1.6;
         }
 
         .footer {
             text-align: center;
             color: white;
-            opacity: 0.8;
-            margin-top: 3rem;
+            opacity: 0.9;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
         }
 
         .footer a {
             color: white;
             text-decoration: none;
             font-weight: 500;
+            transition: var(--transition);
         }
 
         .footer a:hover {
-            text-decoration: underline;
+            color: var(--accent-color);
         }
 
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* 响应式设计 */
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
 
-            .header h1 {
-                font-size: 2rem;
+            .navbar {
+                padding: 0.5rem 0;
+            }
+
+            .nav-content {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .header {
+                margin: 6rem 0 3rem;
+            }
+
+            .header-stats {
+                gap: 2rem;
             }
 
             .docs-grid {
@@ -150,19 +482,105 @@
             }
 
             .doc-card {
+                padding: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .doc-card {
                 padding: 1.5rem;
             }
+
+            .header-stats {
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 加载动画 */
+        .loading {
+            opacity: 0;
+        }
+
+        .loaded {
+            opacity: 1;
         }
     </style>
 </head>
-<body>
+<body class="loading">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="nav-logo">📚 ximing766</a>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#docs">文档</a></li>
+                <li><a href="#features">特色</a></li>
+                <li><a href="https://github.com/ximing766">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
-        <header class="header">
+        <header class="header" id="home">
             <h1>🚀 ximing766 技术文档中心</h1>
-            <p>欢迎访问我的技术文档集合，这里汇集了各种项目文档、技术笔记和开发指南</p>
+            <p>欢迎访问我的技术文档集合，这里汇集了各种项目文档、技术笔记和开发指南，致力于为开发者提供高质量的技术资源和实用工具</p>
+            
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-number">4+</span>
+                    <div class="stat-label">项目文档</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <div class="stat-label">技术笔记</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <div class="stat-label">在线访问</div>
+                </div>
+            </div>
         </header>
 
-        <main class="docs-grid">
+        <main class="docs-grid" id="docs">
             <div class="doc-card">
                 <h3>
                     <svg class="icon" viewBox="0 0 24 24">
@@ -170,7 +588,7 @@
                     </svg>
                     UWB技术文档
                 </h3>
-                <p>Ultra-Wideband (UWB) 技术相关的文档，包括协议介绍、开发指南、常见问题解答等内容。涵盖UWB技术的基础知识和实际应用案例。</p>
+                <p>Ultra-Wideband (UWB) 技术相关的文档，包括协议介绍、开发指南、常见问题解答等内容。涵盖UWB技术的基础知识和实际应用案例，为物联网和定位技术开发提供全面支持。</p>
                 <a href="https://ximing766.github.io/UwbKnowledgePoints/" class="doc-link">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
@@ -187,7 +605,7 @@
                     </svg>
                     UWB应用计划文档
                 </h3>
-                <p>UWB技术的具体应用计划和实施方案，包含详细的技术规划、协议设计和项目实施指南。</p>
+                <p>UWB技术的具体应用计划和实施方案，包含详细的技术规划、协议设计和项目实施指南。从理论到实践，提供完整的解决方案和最佳实践经验。</p>
                 <a href="https://ximing766.github.io/UWB_Application_Plan/" class="doc-link">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
@@ -204,7 +622,7 @@
                     </svg>
                     项目文档模板
                 </h3>
-                <p>通用的项目文档模板和技术指南，包含快速开始指南、进阶技巧等内容，适用于各种技术项目的文档编写。</p>
+                <p>通用的项目文档模板和技术指南，包含快速开始指南、进阶技巧等内容。适用于各种技术项目的文档编写，帮助开发者快速构建专业的项目文档。</p>
                 <a href="https://ximing766.github.io/my-project-doc/" class="doc-link">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
@@ -214,15 +632,14 @@
                 </a>
             </div>
 
-            <!-- 可以继续添加更多文档卡片 -->
             <div class="doc-card">
                 <h3>
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                     </svg>
-                    更多项目
+                    开源项目集合
                 </h3>
-                <p>持续更新中的其他技术项目和文档，包括各种开发工具、技术笔记和实用指南。</p>
+                <p>持续更新中的其他技术项目和文档，包括各种开发工具、技术笔记和实用指南。探索更多创新项目和实用工具，与开发者社区共同成长。</p>
                 <a href="https://github.com/ximing766" class="doc-link">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -232,9 +649,137 @@
             </div>
         </main>
 
+        <!-- 特色功能区域 -->
+        <section class="features-section" id="features">
+            <h2 class="features-title">✨ 为什么选择我们</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <h4>高质量内容</h4>
+                    <p>精心编写的技术文档，涵盖从基础概念到高级应用的完整知识体系</p>
+                </div>
+                <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <h4>持续更新</h4>
+                    <p>定期更新文档内容，跟上技术发展趋势，确保信息的时效性和准确性</p>
+                </div>
+                <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                    </svg>
+                    <h4>开源共享</h4>
+                    <p>所有项目开源共享，促进技术交流与合作，共同推动技术社区发展</p>
+                </div>
+            </div>
+        </section>
+
         <footer class="footer">
-            <p>© 2024 <a href="https://github.com/ximing766">ximing766</a> | 技术文档中心 | 持续更新中...</p>
+            <div class="footer-content">
+                <span>© 2024 <a href="https://github.com/ximing766">ximing766</a></span>
+                <span>|</span>
+                <span>技术文档中心</span>
+                <span>|</span>
+                <span>持续更新中...</span>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/ximing766" class="social-link" title="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="mailto:ximing766@gmail.com" class="social-link" title="Email">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </a>
+                <a href="#home" class="social-link" title="回到顶部">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+                    </svg>
+                </a>
+            </div>
         </footer>
     </div>
+
+    <script>
+        // 页面加载完成后移除loading类
+        window.addEventListener('load', function() {
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        let lastScrollTop = 0;
+        const navbar = document.querySelector('.navbar');
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // 向下滚动，隐藏导航栏
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                // 向上滚动，显示导航栏
+                navbar.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // 统计数字动画
+        function animateNumbers() {
+            const stats = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalNumber = target.textContent.replace('+', '');
+                        let current = 0;
+                        const increment = finalNumber === '24/7' ? 1 : Math.ceil(finalNumber / 20);
+                        
+                        const timer = setInterval(() => {
+                            if (finalNumber === '24/7') {
+                                target.textContent = '24/7';
+                                clearInterval(timer);
+                            } else {
+                                current += increment;
+                                if (current >= finalNumber) {
+                                    target.textContent = finalNumber + '+';
+                                    clearInterval(timer);
+                                } else {
+                                    target.textContent = current + '+';
+                                }
+                            }
+                        }, 100);
+                        
+                        observer.unobserve(target);
+                    }
+                });
+            });
+            
+            stats.forEach(stat => observer.observe(stat));
+        }
+
+        // 页面加载完成后启动数字动画
+        document.addEventListener('DOMContentLoaded', animateNumbers);
+    </script>
 </body>
 </html>
