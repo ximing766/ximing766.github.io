@@ -18,12 +18,7 @@
 - **描述**：Ultra-Wideband (UWB) 技术相关的文档，包括协议介绍、开发指南、常见问题解答等内容
 - **内容**：UWB技术的基础知识和实际应用案例
 
-### 2. UWB应用计划文档
-- **链接**：[https://ximing766.github.io/UWB_Application_Plan/](https://ximing766.github.io/UWB_Application_Plan/)
-- **描述**：UWB技术的具体应用计划和实施方案
-- **内容**：详细的技术规划、协议设计和项目实施指南
-
-### 3. 项目文档模板
+### 2. 项目文档模板
 - **链接**：[https://ximing766.github.io/my-project-doc/](https://ximing766.github.io/my-project-doc/)
 - **描述**：通用的项目文档模板和技术指南
 - **内容**：快速开始指南、进阶技巧等，适用于各种技术项目的文档编写
