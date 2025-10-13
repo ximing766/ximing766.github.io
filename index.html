@@ -816,7 +816,7 @@
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="nav-content">
-            <a href="#" class="nav-logo">📚 ximing766</a>
+            <a href="#" class="nav-logo">📚 Welcome</a>
             <ul class="nav-links">
                 <li><a href="#home">首页</a></li>
                 <li><a href="#docs">文档</a></li>
@@ -828,7 +828,7 @@
     <div class="container">
         <header class="header" id="home">
             <h1>技术文档中心</h1>
-            <p>欢迎访问我的技术文档集合，这里汇集了各种项目文档、技术笔记和开发指南</p>
+            <p>欢迎访问，这里汇集了各种项目文档、技术笔记和开发指南</p>
             
             <div class="header-stats">
                 <div class="stat-item">
@@ -836,7 +836,7 @@
                     <div class="stat-label">项目文档</div>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">50+</span>
+                    <span class="stat-number">2+</span>
                     <div class="stat-label">技术笔记</div>
                 </div>
             </div>
@@ -874,7 +874,7 @@
 
         <footer class="footer">
             <div class="footer-content">
-                <span>© 2025 ximing766</span>
+                <span id="current-date">2025-01-01 </span>
                 <span>|</span>
                 <span>技术文档中心</span>
                 <span>|</span>
@@ -1010,6 +1010,26 @@
             const speed = scrolled * 0.5;
             parallax.style.transform = `translateY(${speed}px)`;
         });
+
+        // 实时更新日期
+        function updateCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const dateString = `${year}-${month}-${day} `;
+            
+            const dateElement = document.getElementById('current-date');
+            if (dateElement) {
+                dateElement.textContent = dateString;
+            }
+        }
+
+        // 页面加载时更新日期
+        updateCurrentDate();
+
+        // 每小时自动更新日期
+        setInterval(updateCurrentDate, 1 * 60 * 60 * 1000); // 1小时检查一次
     </script>
 </body>
 </html>
