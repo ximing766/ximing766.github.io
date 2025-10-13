@@ -14,7 +14,7 @@
 ## 📚 文档项目
 
 ### 1. UWB技术文档
-- **链接**：[https://ximing766.github.io/UwbKnowledgePoints/](https://ximing766.github.io/UwbKnowledgePoints/)
+- **链接**：[https://ximing766.github.io/Uwb_doc/](https://ximing766.github.io/Uwb_doc/)
 - **描述**：Ultra-Wideband (UWB) 技术相关的文档，包括协议介绍、开发指南、常见问题解答等内容
 - **内容**：UWB技术的基础知识和实际应用案例
 
